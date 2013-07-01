@@ -1,7 +1,7 @@
 package gles2
 
 /*
-#cgo linux LDFLAGS: -lGLESv2  -lEGL  
+#cgo linux LDFLAGS: -lGLESv2  -lEGL
 #include <stdlib.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
@@ -460,12 +460,14 @@ func GetIntegerv(
 		C.GLenum(pname),
 		(*C.GLint)(params))
 }
+
+// FIX params
 func GetProgramiv(
 	program uint32, pname Enum, params *int32) {
 	C.glGetProgramiv(
 		C.GLuint(program),
 		C.GLenum(pname),
-		(*C.GLint)(params))
+		(*C.GLint)(unsafe.Pointer(params)))
 
 }
 func GetProgramInfoLog(
