@@ -1,4 +1,6 @@
-go-gles2
-========
+# OpenGL ES 2.0 for Go
 
-go wrapper for the gles2 api
+The package provides [Go](http://golang.org) bindings to the OpenGL ES
+2.0 library.
+
+

@@ -495,15 +495,18 @@ func GetProgramiv(
 }
 func GetProgramInfoLog(
 	program uint32, bufsize Sizei,
-	length *Sizei, infolog *string) {
-	s := glString(*infolog)
+	length *Sizei) string {
+
+	buffer := (*C.GLchar)(C.malloc(C.size_t(bufsize)))
+	defer C.free(unsafe.Pointer(buffer))
+
 	C.glGetProgramInfoLog(
 		C.GLuint(program),
 		C.GLsizei(bufsize),
 		(*C.GLsizei)(length),
-		s)
-	infolog = goString(s)
-	println(infolog)
+		buffer)
+
+	return *goString(buffer)
 }
 func GetRenderbufferParameteriv(
 	target Enum, pname Enum, params *int32) {
@@ -521,15 +524,18 @@ func GetShaderiv(
 }
 func GetShaderInfoLog(
 	shader uint32, bufsize Sizei,
-	length *Sizei, infolog *string) {
-	s := glString(*infolog)
+	length *Sizei) string {
+
+	buffer := (*C.GLchar)(C.malloc(C.size_t(bufsize)))
+	defer C.free(unsafe.Pointer(buffer))
+
 	C.glGetShaderInfoLog(
 		C.GLuint(shader),
 		C.GLsizei(bufsize),
 		(*C.GLsizei)(length),
-		s)
-	infolog = goString(s)
-	println(infolog)
+		buffer)
+
+	return *goString(buffer)
 }
 func GetShaderPrecisionFormat(
 	shadertype Enum, precisiontype Enum,
