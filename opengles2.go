@@ -31,7 +31,10 @@ package gles2
 #include <GLES2/gl2platform.h>
 */
 import "C"
-import "unsafe"
+import (
+	"reflect"
+	"unsafe"
+)
 
 func ActiveTexture(
 	texture Enum) {
@@ -1001,14 +1004,14 @@ func VertexAttrib4fv(
 }
 func VertexAttribPointer(
 	indx uint32, size int32, type_ Enum,
-	normalized bool, stride Sizei, offset uint) {
+	normalized bool, stride Sizei, ptr interface{}) {
 	C.glVertexAttribPointer(
 		C.GLuint(indx),
 		C.GLint(size),
 		C.GLenum(type_),
 		glBoolean(normalized),
 		C.GLsizei(stride),
-		unsafe.Pointer(uintptr(offset)))
+		unsafe.Pointer(reflect.ValueOf(ptr).Pointer()))
 }
 func Viewport(
 	x int32, y int32, width Sizei, height Sizei) {
